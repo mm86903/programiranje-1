@@ -11,8 +11,8 @@
  predstavljen s seznamom števil s plavajočo vejico, pomnoži z danim skalarjem.
 [*----------------------------------------------------------------------------*)
 
-let razteg _ _ = ()
-
+let razteg koeficient vector = 
+  List.map (fun x -> x *. koeficient) vector   
 let primer_vektorji_1 = razteg 2.0 [1.0; 2.0; 3.0]
 (* val primer_vektorji_1 : float list = [2.; 4.; 6.] *)
 
@@ -21,7 +21,12 @@ let primer_vektorji_1 = razteg 2.0 [1.0; 2.0; 3.0]
  vsoto dveh vektorjev.
 [*----------------------------------------------------------------------------*)
 
-let sestej _ _ = ()
+let sestej l1 l2 = 
+  List.map2(+.) l1 l2
+
+let sestej l1 l2 = 
+  let pari = List.combine l1 l2 in
+  List.map (fun (c1,c2) -> c1 +. c2) pari
 
 let primer_vektorji_2 = sestej [1.0; 2.0; 3.0] [4.0; 5.0; 6.0]
 (* val primer_vektorji_2 : float list = [5.; 7.; 9.] *)
@@ -35,7 +40,10 @@ let primer_vektorji_2 = sestej [1.0; 2.0; 3.0] [4.0; 5.0; 6.0]
 
 let vsota_seznama = List.fold_left (+.) 0.
 
-let skalarni_produkt _ _ = ()
+
+let skalarni_produkt v1 v2 = 
+  let zmnozki = List.map (fun (c1, c2) -> c1 *. c2) (List.combine v1 v2) in
+  vsota_seznama zmnozki
 
 let primer_vektorji_3 = skalarni_produkt [1.0; 2.0; 3.0] [4.0; 5.0; 6.0]
 (* val primer_vektorji_3 : float = 32. *)
@@ -45,7 +53,8 @@ let primer_vektorji_3 = skalarni_produkt [1.0; 2.0; 3.0] [4.0; 5.0; 6.0]
  vektorja.
 [*----------------------------------------------------------------------------*)
 
-let norma _ = ()
+let norma vektor =
+  sqrt(skalarni_produkt vektor vektor)  
 
 let primer_vektorji_4 = norma [3.0; 4.0]
 (* val primer_vektorji_4 : float = 5. *)
